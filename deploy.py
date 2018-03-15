@@ -1,5 +1,7 @@
 from flask import Flask, render_template,request
+
 import shell
+from data import REDIS
 
 app = Flask(__name__)
 
@@ -16,8 +18,6 @@ def index():
 
 @app.route('/command', methods=['GET', 'POST'])
 def command():
-    a=request.form["command"]
-    shell.shell(a)
     return render_template('index.html')
 
 
