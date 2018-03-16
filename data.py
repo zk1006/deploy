@@ -5,7 +5,7 @@
 # @Author       : zk
 # @Mail         : zk1006@live.cn
 # @File         : data.py
-# @description  :
+# @description  : redis|mysql 连接类
 
 import pymysql
 import redis
@@ -20,29 +20,29 @@ class DB:
         self.DB_USER = prop['USER']
         self.DB_PWD = prop['PASSWORD']
         self.DB_NAME = prop['NAME']
-        self.conn = self.getConnection()
+        self.conn = self.get_connection()
 
-    def getConnection(self):
+    def get_connection(self):
         return pymysql.Connect(
-            host=self.DB_HOST,  # 设置MYSQL地址
-            port=self.DB_PORT,  # 设置端口号
-            user=self.DB_USER,  # 设置用户名
-            passwd=self.DB_PWD,  # 设置密码
-            db=self.DB_NAME,  # 数据库名
-            charset='utf8'  # 设置编码
+            host=self.DB_HOST,
+            port=self.DB_PORT,
+            user=self.DB_USER,
+            passwd=self.DB_PWD,
+            db=self.DB_NAME,
+            charset='utf8'
         )
 
-    def query(self, sqlString):
+    def query(self, sql_string):
         cursor = self.conn.cursor()
-        cursor.execute(sqlString)
-        returnData = cursor.fetchall()
+        cursor.execute(sql_string)
+        return_data = cursor.fetchall()
         cursor.close()
         self.conn.close()
-        return returnData
+        return return_data
 
-    def update(self, sqlString):
+    def update(self, sql_string):
         cursor = self.conn.cursor()
-        cursor.execute(sqlString)
+        cursor.execute(sql_string)
         self.conn.commit()
         cursor.close()
         self.conn.close()
@@ -56,9 +56,9 @@ class REDIS:
         self.DB_PWD = prop["PASSWORD"]
         self.DB_INDEX = prop["DB"]
         self.TIMEOUT = prop["DEFAULT_TIMEOUT"]
-        self.conn = self.getConnection()
+        self.conn = self.get_connection()
 
-    def getConnection(self):
+    def get_connection(self):
         return redis.Redis(
             host=self.DB_HOST,
             port=self.DB_PORT,
@@ -70,14 +70,14 @@ class REDIS:
             decode_responses=True)
 
     def get(self, key):
-        redis = self.conn
-        return redis.get(key)
+        conn = self.conn
+        return conn.get(key)
 
-    def add(self, key,value):
-        redis = self.conn
-        return redis.set(key, value)
+    def add(self, key, value):
+        conn = self.conn
+        return conn.set(key, value)
 
-    def addex(self, key,value,extime):
-        redis = self.conn
-        return redis.set(key, value, ex=extime)
+    def add_ex(self, key, value, ex_time):
+        conn = self.conn
+        return conn.set(key, value, ex=ex_time)
 

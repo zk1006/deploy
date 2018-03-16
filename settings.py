@@ -5,7 +5,7 @@
 # @Author       : zk
 # @Mail         : zk1006@live.cn 
 # @File         : settings.py
-# @description  :
+# @description  : 配置信息
 
 DATABASES = {
     'NAME': 'test',

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>添加配置</title>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <link href="/css/layui.css" rel="stylesheet">
+        <script src="/layui.js"></script>
+    </head>
+    <body>
+        <form class="form-horizontal" method="post" action="setting">
+            升级方案名称(非汉字):<input type="text" name="pro"><br>
+            svn所在目录：<input type="text" name="baseSvnPath"><br>
+            项目备份目录：<input type="text" name="projectBak"><br>
+            <div class="path">
+                svn项目1路径：<input type="text" name="path">tomcat1路径：<input type="text" name="tomcatPath"><br>
+            </div>
+            <a href="javascript:;" class="btn" onclick="add()">添加项目</a>
+            <button type="submit" class="btn">提交配置信息</button>
+        </form>
+    <script>
+        var index=1;
+        function add() {
+            index++;
+            $(".path").append("svn项目"+index+"路径：<input name='path'>tomcat"+index+"路径：<input name='tomcatPath'><br>")
+        }
+    </script>
+    </body>
+</html>
