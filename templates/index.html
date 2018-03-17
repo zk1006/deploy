@@ -1,31 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>工具</title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
-    <link href="/css/layui.css" rel="stylesheet">
-    <script src="/layui.js"></script>
-</head>
-<body>
-<a href="toSetting" class="layui-btn layui-btn-normal">配置设置</a>
+{% extends "model.html" %}
 
-<fieldset class="layui-elem-field">
-  <legend>命令行</legend>
-  <div class="layui-field-box">
-      <div class="layui-form-item">
-          <input type="text" name="command" required  lay-verify="required" placeholder="请输入命令" autocomplete="off" class="layui-input">
-            <button class="layui-btn" onclick="command()">执行命令</button>
-      </div>
-  </div>
-</fieldset>
-<div class="taskcon"><textarea readonly="" style="margin: 0px;width: 100%;height: 520px;background-color: #333;color:#fff; padding:0 5px" id="exec_log">等待执行...</textarea></div>
+    {% block title %}
+        <title>工具</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.slim.js"></script>
+    {% endblock %}
 
-<script>
-    function command() {
-        $.post('command',{command:$("input[name='command']").val()})
-    }
+    {% block content %}
+        <fieldset class="layui-elem-field">
+          <legend>选择配置操作</legend>
+          <div class="layui-field-box">
+              <div class="layui-form-item">
+                {% for key in keys %}
+                    <a href="toUpProject?key={{ key }}" class="layui-btn layui-btn-normal">{{ key }}</a>
+                {% endfor %}
+              </div>
+          </div>
+          {% endif %}
+        </fieldset>
+        <a href="toSetting" class="layui-btn layui-btn-normal">配置添加</a>
+    {% endblock %}
+
+
+
+
+
+
+
+{#<fieldset class="layui-elem-field">#}
+{#  <legend>命令行</legend>#}
+{#  <div class="layui-field-box">#}
+{#      <div class="layui-form-item">#}
+{#          <input type="text" name="command" required  lay-verify="required" placeholder="请输入命令" autocomplete="off" class="layui-input">#}
+{#            <button class="layui-btn" onclick="command()">执行命令</button>#}
+{#      </div>#}
+{#  </div>#}
+{#</fieldset>#}
+{#<div class="taskcon"><textarea readonly="" style="margin: 0px;width: 100%;height: 520px;background-color: #333;color:#fff; padding:0 5px" id="exec_log">等待执行...</textarea></div>#}
+{##}
+{#<script>#}
+{#    function command() {#}
+{#        $.post('command',{command:$("input[name='command']").val()})#}
+{#    };#}
 {#    $(document).ready(function(){#}
 {#    var socket = io.connect('http://' + document.domain + ':' + location.port + '/operaLog');#}
 {#    socket.on('my response', function(msg) {#}
@@ -39,7 +54,4 @@
 {#        socket.emit('my broadcast event', {data: $('#broadcast_data').val()});#}
 {#        return false;#}
 {#    });#}
-});
-</script>
-</body>
-</html>
+{#</script>#}

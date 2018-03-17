@@ -26,6 +26,5 @@ def exec_cmd(cmd):
             log = res.stdout.readline().decode() + '\n'
             f.write(log)
             lf.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f  ') + log)
-            print(log)
     f.close()
     lf.close()

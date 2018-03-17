@@ -50,7 +50,7 @@ class DB:
 
 class REDIS:
     def __init__(self):
-        prop = getattr(settings,'RQ_QUEUES')
+        prop = getattr(settings, 'RQ_QUEUES')
         self.DB_HOST = prop["HOST"]
         self.DB_PORT = prop["PORT"]
         self.DB_PWD = prop["PASSWORD"]
@@ -81,3 +81,6 @@ class REDIS:
         conn = self.conn
         return conn.set(key, value, ex=ex_time)
 
+    def get_keys(self):
+        conn = self.conn
+        return conn.keys()

@@ -1,0 +1,24 @@
+{% extends "model.html" %}
+    {% block title %}
+        <title>项目操作</title>
+    {% endblock %}
+
+{% block content %}
+    <form class="layui-form" action="upProject" method="post">
+        <input type="hidden" name="key" value="{{ key }}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择项目</label>
+            <div class="layui-input-block">
+            {% for temp in project.pro %}
+                <input type="checkbox" name="pro" title="{{ temp.svn_path }}" value="{{ temp.svn_path }}">
+            {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="layui-btn layui-btn-normal">开始更新</button>
+    </form>
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+});
+</script>
+{% endblock %}

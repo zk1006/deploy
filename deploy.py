@@ -9,8 +9,7 @@
 
 from flask import Flask, render_template,request
 from flask_socketio import SocketIO, emit
-import json
-from model import pro,pro_path
+from model import pro
 from data import REDIS
 import shell
 
@@ -20,13 +19,9 @@ socketio = SocketIO(app)
 
 
 @app.route('/')
-def hello_world():
-    return render_template('index.html')
-
-
-@app.route('/index')
 def index():
-    return render_template('index.html')
+    keys = REDIS().get_keys()
+    return render_template('index.html', keys=keys)
 
 
 # 跳转配置页面
@@ -40,18 +35,14 @@ def to_setting():
 def setting():
     path_list = request.form.getlist("path")
     tomcat_list = request.form.getlist("tomcatPath")
-
     base_svn_path = request.form["baseSvnPath"]
     pro_name = request.form["pro"]
     project_bak = request.form["projectBak"]
     list = []
     for i in range(len(path_list)):
-        list.append(pro_path(path_list[i], tomcat_list[i]))
-
-    project = pro(base_svn_path, pro_name, project_bak, json.dumps(list))
-
-    print(json.dumps(project))
-    # REDIS.add(pro_name, project.__dict__)
+        list.append({'svn_path': path_list[i], 'tomcat_path': tomcat_list[i]})
+    project = pro(base_svn_path, pro_name, project_bak, list)
+    REDIS().add(pro_name, project.__dict__)
     return render_template('index.html')
 
 
@@ -65,7 +56,27 @@ def command():
 # 根据配置升级项目
 @app.route('/upProject', methods=['GET', 'POST'])
 def up_project():
+    key = request.form['key']
+    up_pros = request.form.getlist("pro")
+    projects = eval(REDIS().get(key))
+    pro_list = []
+    api_list = []
+    for project in projects["pro"]:
+        for up_pro in up_pros:
+            if project["svn_path"] == up_pro and project["tomcat_path"] == '':
+                api_list.append(up_pro)
+            elif project["svn_path"] == up_pro and project["tomcat_path"] != '':
+                pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro})
+    print('api_list:'+api_list.__str__())
+    print('tomcats:'+pro_list.__str__())
     return render_template('index.html')
+
+
+@app.route('/toUpProject', methods=['GET'])
+def to_up_project():
+    key = request.values['key']
+    project = eval(REDIS().get(key))
+    return render_template('upProject.html', project=project, key=key)
 
 
 # @socketio.on('my event', namespace='/operaLog')
