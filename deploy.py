@@ -44,7 +44,7 @@ def setting():
         list.append({'svn_path': path_list[i], 'tomcat_path': tomcat_list[i], "name": name_list[i]})
     project = pro(base_svn_path, pro_name, project_bak, list)
     REDIS().add(pro_name, project.__dict__)
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
 
 @app.route('/command', methods=['GET', 'POST'])

@@ -10,7 +10,7 @@
             <label class="layui-form-label">选择项目</label>
             <div class="layui-input-block">
             {% for temp in project.pro %}
-                <input type="checkbox" name="pro" title="{{ temp.svn_path }}" value="{{ temp.svn_path }}">
+                <input type="checkbox" name="pro" title="{{ temp.name }}" value="{{ temp.name }}">
             {% endfor %}
             </div>
         </div>
