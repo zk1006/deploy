@@ -31,7 +31,7 @@ def up_pro(pros, svn_path,bak_path):
                 # 备份到目录
                 shell.exec_cmd(
                     "cp -rp " + pro["tomcat"] + "/webapps/" + path['name'] + ".war " + bak_path + "/" + path['name'] +
-                    "/" + path['name'] + datetime.datetime.now().strftime('-%Y%m%d%H%M%S') + ".war")
+                    "/" + datetime.datetime.now().strftime('-%Y%m%d%H%M%S') + ".war")
                 # 删除相应的项目
                 shell.exec_cmd("rm -rf " + pro["tomcat"] + "/webapps/" + path['name'] + "*")
                 commd_str += path['name']+","

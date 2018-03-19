@@ -15,7 +15,7 @@ def exec_cmd(cmd):
     log = r'/tmp/deploy.' + datetime.datetime.now().strftime('%Y-%m-%d') + '.log'
     f = open(tmp, "w")
     lf = open(log, "a+")
-    lf.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f  ') + 'run:' + cmd)
+    lf.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f  ') + 'run:' + cmd + '\n')
     res = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     while True:
         data = res.stdout.readline()
@@ -23,7 +23,7 @@ def exec_cmd(cmd):
             if res.poll() is not None:
                 break
         else:
-            log = res.stdout.readline().decode() + '\n'
+            log = res.stdout.readline().decode()
             f.write(log)
             lf.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f  ') + log)
     f.close()
