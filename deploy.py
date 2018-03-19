@@ -67,7 +67,8 @@ def up_project():
                 api_list.append(up_pro)
             elif project["svn_path"] == up_pro and project["tomcat_path"] != '':
                 pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro, 'name': project["name"]})
-    upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
+    if api_list.__len__() > 0:
+        upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
     upProject.up_pro(pro_list, projects["base_svn_path"], projects["bak_path"])
     return render_template('index.html')
 
