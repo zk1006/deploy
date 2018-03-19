@@ -11,7 +11,9 @@ from flask import Flask, render_template,request
 from flask_socketio import SocketIO, emit
 from model import pro
 from data import REDIS
+import upProject
 import shell
+import sys
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret!'
@@ -35,12 +37,13 @@ def to_setting():
 def setting():
     path_list = request.form.getlist("path")
     tomcat_list = request.form.getlist("tomcatPath")
+    name_list = request.form.getlist("name")
     base_svn_path = request.form["baseSvnPath"]
     pro_name = request.form["pro"]
     project_bak = request.form["projectBak"]
     list = []
     for i in range(len(path_list)):
-        list.append({'svn_path': path_list[i], 'tomcat_path': tomcat_list[i]})
+        list.append({'svn_path': path_list[i], 'tomcat_path': tomcat_list[i], "name": name_list[i]})
     project = pro(base_svn_path, pro_name, project_bak, list)
     REDIS().add(pro_name, project.__dict__)
     return render_template('index.html')
@@ -66,9 +69,9 @@ def up_project():
             if project["svn_path"] == up_pro and project["tomcat_path"] == '':
                 api_list.append(up_pro)
             elif project["svn_path"] == up_pro and project["tomcat_path"] != '':
-                pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro})
-    print('api_list:'+api_list.__str__())
-    print('tomcats:'+pro_list.__str__())
+                pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro, 'name': project["name"]})
+    upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
+    upProject.up_pro(pro_list, projects["base_svn_path"], projects["bak_path"])
     return render_template('index.html')
 
 
@@ -109,4 +112,5 @@ def to_up_project():
 
 
 if __name__ == '__main__':
+    shell.exec_cmd("chmod 777 "+sys.path[0]+"/cpAndStart.sh")
     app.run(port=8888)
