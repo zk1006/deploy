@@ -110,4 +110,4 @@ def to_up_project():
 
 if __name__ == '__main__':
     shell.exec_cmd("chmod 777 "+sys.path[0]+"/cpAndStart.sh")
-    app.run(port=8888)
+    app.run(host='0.0.0.0',port=8888)
