@@ -7,45 +7,45 @@
 # @File         : data.py
 # @description  : redis|mysql 连接类
 
-import pymysql
 import redis
 import settings
-
-
-class DB:
-    def __init__(self):
-        prop = getattr(settings, 'DATABASES')
-        self.DB_HOST = prop['HOST']
-        self.DB_PORT = prop['PORT']
-        self.DB_USER = prop['USER']
-        self.DB_PWD = prop['PASSWORD']
-        self.DB_NAME = prop['NAME']
-        self.conn = self.get_connection()
-
-    def get_connection(self):
-        return pymysql.Connect(
-            host=self.DB_HOST,
-            port=self.DB_PORT,
-            user=self.DB_USER,
-            passwd=self.DB_PWD,
-            db=self.DB_NAME,
-            charset='utf8'
-        )
-
-    def query(self, sql_string):
-        cursor = self.conn.cursor()
-        cursor.execute(sql_string)
-        return_data = cursor.fetchall()
-        cursor.close()
-        self.conn.close()
-        return return_data
-
-    def update(self, sql_string):
-        cursor = self.conn.cursor()
-        cursor.execute(sql_string)
-        self.conn.commit()
-        cursor.close()
-        self.conn.close()
+# import pymysql
+#
+#
+# class DB:
+#     def __init__(self):
+#         prop = getattr(settings, 'DATABASES')
+#         self.DB_HOST = prop['HOST']
+#         self.DB_PORT = prop['PORT']
+#         self.DB_USER = prop['USER']
+#         self.DB_PWD = prop['PASSWORD']
+#         self.DB_NAME = prop['NAME']
+#         self.conn = self.get_connection()
+#
+#     def get_connection(self):
+#         return pymysql.Connect(
+#             host=self.DB_HOST,
+#             port=self.DB_PORT,
+#             user=self.DB_USER,
+#             passwd=self.DB_PWD,
+#             db=self.DB_NAME,
+#             charset='utf8'
+#         )
+#
+#     def query(self, sql_string):
+#         cursor = self.conn.cursor()
+#         cursor.execute(sql_string)
+#         return_data = cursor.fetchall()
+#         cursor.close()
+#         self.conn.close()
+#         return return_data
+#
+#     def update(self, sql_string):
+#         cursor = self.conn.cursor()
+#         cursor.execute(sql_string)
+#         self.conn.commit()
+#         cursor.close()
+#         self.conn.close()
 
 
 class REDIS:

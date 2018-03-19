@@ -7,8 +7,7 @@
 # @File         : settings.py
 # @description  : 配置信息
 
-from flask import Flask, render_template,request
-from flask_socketio import SocketIO, emit
+from flask import Flask, render_template, request
 from model import pro
 from data import REDIS
 import upProject
@@ -16,8 +15,6 @@ import shell
 import sys
 
 app = Flask(__name__, static_url_path='')
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
 
 
 @app.route('/')
