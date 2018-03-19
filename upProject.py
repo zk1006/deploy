@@ -35,6 +35,8 @@ def up_pro(pros, svn_path,bak_path):
                 # 删除相应的项目
                 shell.exec_cmd("rm -rf " + pro["tomcat"] + "/webapps/" + path['name'] + "*")
                 commd_str += path['name']+","
+            # 停止tomcat操作
+            shell.exec_cmd("ps -ef|grep " + pro["tomcat"] + "|grep -v grep|cut -c 9-15|xargs kill -9")
             shell.exec_cmd(commd_str)
     return
 

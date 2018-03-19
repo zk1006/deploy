@@ -7,7 +7,7 @@
 # @File         : settings.py
 # @description  : 配置信息
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from model import pro
 from data import REDIS
 import upProject
@@ -18,6 +18,7 @@ app = Flask(__name__, static_url_path='')
 
 
 @app.route('/')
+@app.route('/index')
 def index():
     keys = REDIS().get_keys()
     return render_template('index.html', keys=keys)
@@ -70,7 +71,7 @@ def up_project():
     if api_list.__len__() > 0:
         upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
     upProject.up_pro(pro_list, projects["base_svn_path"], projects["bak_path"])
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
 
 @app.route('/toUpProject', methods=['GET'])
