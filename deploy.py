@@ -70,7 +70,8 @@ def up_project():
                 pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro, 'name': project["name"]})
     if api_list.__len__() > 0:
         upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
-    upProject.up_pro(pro_list, projects["base_svn_path"], projects["bak_path"])
+    if pro_list.__len__() > 0:
+        upProject.up_pro(pro_list, projects["base_svn_path"], projects["bak_path"])
     return redirect(url_for('index'))
 
 
