@@ -22,4 +22,7 @@ ln -s /opt/python3.6/bin/pip3 /usr/bin/pip3
 rm -rf /usr/bin/python3
 ln -s /opt/python3.6/bin/python3 /usr/bin/python3
 
+cd ../deploy
+
 pip3 install --upgrade pip
+pip3 install -r requirements.txt
