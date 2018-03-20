@@ -64,9 +64,9 @@ def up_project():
     api_list = []
     for project in projects["pro"]:
         for up_pro in up_pros:
-            if project["svn_path"] == up_pro and project["tomcat_path"] == '':
+            if project["name"] == up_pro and project["tomcat_path"] == '':
                 api_list.append(up_pro)
-            elif project["svn_path"] == up_pro and project["tomcat_path"] != '':
+            elif project["name"] == up_pro and project["tomcat_path"] != '':
                 pro_list.append({'tomcat': project["tomcat_path"], 'path': up_pro, 'name': project["name"]})
     if api_list.__len__() > 0:
         upProject.up_pro(api_list, projects["base_svn_path"], projects["bak_path"])
