@@ -11,12 +11,12 @@ DATABASES = {
     'NAME': 'test',
     'USER': 'root',
     'PASSWORD': '159256',
-    'HOST': '192.168.0.5',
+    'HOST': '192.168.1.6',
     'PORT': '3306'
 }
 
 RQ_QUEUES = {
-    'HOST': '192.168.0.5',
+    'HOST': '192.168.1.6',
     'PORT': 6379,
     'DB': 7,
     'PASSWORD': 'cbhb2018',
