@@ -11,7 +11,7 @@ import datetime
 import sys
 
 
-def up_pro(pros, svn_path,bak_path):
+def up_pro(pros, svn_path, bak_path):
     temp = pros[0]
     if isinstance(temp, str):
         pros = api_sort(pros)
