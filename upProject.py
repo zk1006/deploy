@@ -23,7 +23,7 @@ def up_pro(pros, svn_path, bak_path):
         for pro in pros:
             commd_str = sys.path[0] + "/cpAndStart.sh " + pro["tomcat"] + " "+bak_path+" "
             # 停止tomcat操作
-            shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
+            # shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
             for path in pro["pro"]:
                 # 打包
                 shell.exec_cmd("cd " + svn_path + "/" +
