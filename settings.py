@@ -8,7 +8,7 @@
 # @description  : 配置信息
 
 DATABASES = {
-    'NAME': 'test',
+    'NAME': 'bh-online-trade',
     'USER': 'root',
     'PASSWORD': '159256',
     'HOST': '192.168.1.6',
@@ -16,9 +16,9 @@ DATABASES = {
 }
 
 RQ_QUEUES = {
-    'HOST': '192.168.1.6',
+    'HOST': '192.168.1.22',
     'PORT': 6379,
     'DB': 7,
-    'PASSWORD': 'cbhb2018',
+    'PASSWORD': 'ylzf2018',
     'DEFAULT_TIMEOUT': 360
 }
