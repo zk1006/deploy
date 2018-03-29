@@ -17,7 +17,7 @@ def up_pro(pros, svn_path, bak_path):
         pros = api_sort(pros)
         for api in pros:
             # 打包api
-            shell.exec_cmd("cd "+svn_path+api['path']+" && svn update && mvn clean install -Dmaven.test.skip=true")
+            shell.exec_cmd("cd "+svn_path+api+" && svn update && mvn clean install -Dmaven.test.skip=true")
     else:
         pros = tomcat_sort(pros)
         for pro in pros:
@@ -44,7 +44,7 @@ def up_pro(pros, svn_path, bak_path):
 def api_sort(apis):
     api_list = []
     for api in apis:
-        if 'model' in api['name']:
+        if 'model' in api:
             api_list.append(api)
     for api in apis:
         api_list.append(api)
