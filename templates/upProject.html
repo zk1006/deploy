@@ -10,15 +10,42 @@
             <label class="layui-form-label">选择项目</label>
             <div class="layui-input-block">
             {% for temp in project.pro %}
-                <input type="checkbox" name="pro" title="{{ temp.name }}" value="{{ temp.name }}">
+                {% if temp.tomcat_path!='' %}
+                    <input type="checkbox" name="pro" title="{{ temp.name }}" value="{{ temp.name }}">
+                {% endif %}
             {% endfor %}
             </div>
         </div>
+        <hr class="layui-bg-blue">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择api</label>
+            <div class="layui-input-block">
+            {% for temp in project.pro %}
+                {% if temp.tomcat_path=='' %}
+                    <input type="checkbox" class="api" name="pro" title="{{ temp.name }}" value="{{ temp.name }}">
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+        <a href="javascript:;" onclick="apiUpdate()" class="api-submit layui-btn layui-btn-normal" >全选api</a>
         <button type="submit" class="layui-btn layui-btn-normal">开始更新</button>
     </form>
 <script>
+var checkApi=false;
+var form;
 layui.use('form', function(){
-  var form = layui.form;
+  form = layui.form;
 });
+function apiUpdate() {
+    if (checkApi){
+        checkApi=false
+        $(".api").attr("checked",false);
+    }else {
+        checkApi=true
+        $(".api").attr("checked",true);
+    }
+    form.render();
+}
+
 </script>
 {% endblock %}
