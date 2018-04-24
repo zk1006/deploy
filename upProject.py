@@ -17,16 +17,16 @@ def up_pro(pros, svn_path, bak_path):
         pros = api_sort(pros)
         for api in pros:
             # 打包api
-            shell.exec_cmd("cd "+svn_path+api+" && svn update && mvn clean install -Dmaven.test.skip=true")
+            shell.exec_cmd("cd "+svn_path+api+" && mvn clean install -Dmaven.test.skip=true")
     else:
         pros = tomcat_sort(pros)
         for pro in pros:
             commd_str = sys.path[0] + "/cpAndStart.sh " + pro["tomcat"] + " "+bak_path+" "
             # 停止tomcat操作
-            # shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
+            shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
             for path in pro["pro"]:
                 # 打包
-                shell.exec_cmd("cd " + svn_path + path['svn'] + " && svn update && mvn clean install -Dmaven.test.skip=true -P test")
+                shell.exec_cmd("cd " + svn_path + path['svn'] + " && mvn clean install -Dmaven.test.skip=true -P pro")
                 # 备份到目录
                 shell.exec_cmd(
                     "cp -rp " + pro["tomcat"] + "/webapps/" + path['name'] + ".war " + bak_path + "/" + path['name'] +

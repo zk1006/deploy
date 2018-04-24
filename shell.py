@@ -24,6 +24,7 @@ def exec_cmd(cmd):
                 break
         else:
             log = res.stdout.readline().decode()
+            print(log)
             f.write(log)
             lf.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f  ') + log)
     f.close()

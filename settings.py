@@ -11,14 +11,13 @@ DATABASES = {
     'NAME': 'bh-online-trade',
     'USER': 'root',
     'PASSWORD': 'A123456',
-    'HOST': '192.168.1.22',
+    'HOST': 'm.bank-pay.com',
     'PORT': '3306'
 }
 
 RQ_QUEUES = {
-    'HOST': '192.168.1.22',
-    'PORT': 6381,
-    'DB': 0,
-    'PASSWORD': 'ylzf2018',
+    'HOST': '127.0.0.1',
+    'PORT': 6379,
+    'PASSWORD': '﻿Jayzhangxiao001',
     'DEFAULT_TIMEOUT': 360
 }

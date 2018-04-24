@@ -59,23 +59,15 @@ class DB:
 
 
 class REDIS:
-    def __init__(self):
+    def __init__(self, index=None):
         prop = getattr(settings, 'RQ_QUEUES')
         self.DB_HOST = prop["HOST"]
         self.DB_PORT = prop["PORT"]
         self.DB_PWD = prop["PASSWORD"]
-        self.DB_INDEX = prop["DB"]
-        self.TIMEOUT = prop["DEFAULT_TIMEOUT"]
-        self.conn = self.get_connection()
-
-    def __init__(self, index):
-        if not isinstance(index, int) or -1 > index or index > 15:
-            raise ex.DataEx('数据库索引超出范围')
-        prop = getattr(settings, 'RQ_QUEUES')
-        self.DB_HOST = prop["HOST"]
-        self.DB_PORT = prop["PORT"]
-        self.DB_PWD = prop["PASSWORD"]
-        self.DB_INDEX = index
+        if not index is None:
+            self.DB_INDEX = index
+        else:
+            self.DB_INDEX = 7
         self.TIMEOUT = prop["DEFAULT_TIMEOUT"]
         self.conn = self.get_connection()
 
@@ -102,9 +94,13 @@ class REDIS:
         conn = self.get_connection()
         return conn.set(key, value, ex=ex_time)
 
-    def get_keys(self):
+    def get_keys(self, key=None):
         conn = self.get_connection()
-        return conn.keys()
+        if not key is None:
+            return conn.keys(key)
+        else:
+            return conn.keys()
+
 
 
 # def randtime():
@@ -134,5 +130,8 @@ class REDIS:
 #     DB().update(sqlstr)
 #     print("执行完成:{}".format(i))
 
-if __name__ == '__main__':
-    print(REDIS(15))
+# if __name__ == '__main__':
+#     menu_names = REDIS().get_keys("menu*")
+#     menus = []
+#     for menu_name in menu_names:
+#         menus.append(REDIS().get(menu_name))
