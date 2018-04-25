@@ -9,54 +9,54 @@
 
 import redis
 import settings
-import mysql.connector
+# import mysql.connector
 import exception as ex
 # import time
 # import random
 # from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
-
-
-class DB:
-    def __init__(self):
-        prop = getattr(settings, 'DATABASES')
-        self.DB_HOST = prop['HOST']
-        self.DB_PORT = prop['PORT']
-        self.DB_USER = prop['USER']
-        self.DB_PWD = prop['PASSWORD']
-        self.DB_NAME = prop['NAME']
-        self.conn = self.get_connection()
-
-    def get_connection(self):
-        return mysql.connector.connect(
-            user=self.DB_USER,
-            password=self.DB_PWD,
-            port=self.DB_PORT,
-            host=self.DB_HOST,
-            database=self.DB_NAME)
-
-    def query(self, sql_string):
-        cursor = self.conn.cursor()
-        try:
-            cursor.execute(sql_string)
-            return_data = cursor.fetchall()
-        except mysql.connector.Error as e:
-            print('query error!{}'.format(e))
-        finally:
-            cursor.close()
-            self.conn.close()
-        return return_data
-
-    def update(self, sql_string):
-        cursor = self.conn.cursor()
-        try:
-            cursor.execute(sql_string)
-            self.conn.commit()
-        except mysql.connector.Error as e:
-            print('update error!{}'.format(e))
-        finally:
-            cursor.close()
-            self.conn.close()
-
+#
+#
+# class DB:
+#     def __init__(self):
+#         prop = getattr(settings, 'DATABASES')
+#         self.DB_HOST = prop['HOST']
+#         self.DB_PORT = prop['PORT']
+#         self.DB_USER = prop['USER']
+#         self.DB_PWD = prop['PASSWORD']
+#         self.DB_NAME = prop['NAME']
+#         self.conn = self.get_connection()
+#
+#     def get_connection(self):
+#         return mysql.connector.connect(
+#             user=self.DB_USER,
+#             password=self.DB_PWD,
+#             port=self.DB_PORT,
+#             host=self.DB_HOST,
+#             database=self.DB_NAME)
+#
+#     def query(self, sql_string):
+#         cursor = self.conn.cursor()
+#         try:
+#             cursor.execute(sql_string)
+#             return_data = cursor.fetchall()
+#         except mysql.connector.Error as e:
+#             print('query error!{}'.format(e))
+#         finally:
+#             cursor.close()
+#             self.conn.close()
+#         return return_data
+#
+#     def update(self, sql_string):
+#         cursor = self.conn.cursor()
+#         try:
+#             cursor.execute(sql_string)
+#             self.conn.commit()
+#         except mysql.connector.Error as e:
+#             print('update error!{}'.format(e))
+#         finally:
+#             cursor.close()
+#             self.conn.close()
+#
 
 class REDIS:
     def __init__(self, index=None):

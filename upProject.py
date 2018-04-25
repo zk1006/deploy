@@ -21,22 +21,26 @@ def up_pro(pros, svn_path, bak_path):
     else:
         pros = tomcat_sort(pros)
         for pro in pros:
-            commd_str = sys.path[0] + "/cpAndStart.sh " + pro["tomcat"] + " "+bak_path+" "
+            commd_str = ''
+            # commd_str = sys.path[0] + "/cpAndStart.sh " + pro["tomcat"] + " "+bak_path+" "
             # 停止tomcat操作
-            shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
+            # shell.exec_cmd("ps -ef|grep "+pro["tomcat"]+"|grep -v grep|cut -c 9-15|xargs kill -9")
             for path in pro["pro"]:
+                commd_str += path['name'] + ".war "
                 # 打包
                 shell.exec_cmd("cd " + svn_path + path['svn'] + " && mvn clean install -Dmaven.test.skip=true -P pro")
                 # 备份到目录
                 shell.exec_cmd(
-                    "cp -rp " + pro["tomcat"] + "/webapps/" + path['name'] + ".war " + bak_path + "/" + path['name'] +
+                    "cp -rp " + pro["tomcat"] + path['name'] + ".war " + bak_path + "/" + path['name'] +
                     "/" + path['name'] + datetime.datetime.now().strftime('-%Y%m%d%H%M%S') + ".war")
                 # 删除相应的项目
-                shell.exec_cmd("rm -rf " + pro["tomcat"] + "/webapps/" + path['name'] + "*")
-                commd_str += path['name']+","
+                shell.exec_cmd("rm -rf " + pro["tomcat"] + path['name'] + "*")
+            shell.exec_cmd("cd " + bak_path + " &&cp -rp " + commd_str + pro["tomcat"])
+            temp = pro["tomcat"]
+            shell.exec_cmd("docker restart " + temp[temp.__len__() - 2].split('-')[:1])
             # 停止tomcat操作
-            shell.exec_cmd("ps -ef|grep " + pro["tomcat"] + "|grep -v grep|cut -c 9-15|xargs kill -9")
-            shell.exec_cmd(commd_str)
+            # shell.exec_cmd("ps -ef|grep " + pro["tomcat"] + "|grep -v grep|cut -c 9-15|xargs kill -9")
+            # shell.exec_cmd(commd_str)
     return
 
 
